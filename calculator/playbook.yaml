@@ -21,4 +21,4 @@
       ignore_errors: yes
 
     - name: Run the container
-      command: docker run -it --name calculator-container hashtagsau/scientific-calculator:latest
+      command: docker run -dit --name calculator-container hashtagsau/scientific-calculator:latest

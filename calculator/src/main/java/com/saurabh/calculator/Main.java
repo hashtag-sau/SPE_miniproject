@@ -69,6 +69,8 @@ public class Main {
         System.out.println("3. Natural Logarithm");
         System.out.println("4. Power Function");
         System.out.println("5. Exit");
+        System.out.flush(); //fixes for displaying the menu when attach to docker 
+        
     }
 
 }
