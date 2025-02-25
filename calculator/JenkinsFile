@@ -4,35 +4,45 @@ pipeline{
             stage('Checkout'){
                 steps{
                     git url: 'https://github.com/hashtag-sau/SPE_miniproject.git', branch: 'main'
-                    sh 'cd calculator'
+
                 }
             }
             stage('Build'){
                 steps{
-
-                    sh 'mvn clean package'
+                    dir('calculator') {
+                    sh 'mvn clean install'
+                }
                 }
             }
             stage('Test'){
                 steps{
+                     dir('calculator') {
                     sh 'mvn test'
+                    }
                 }
             }
             stage('Docker Image Build'){
                 steps{
-                    sh 'docker build -t scientific-calculator .'
+                    dir('calculator'){
+                        sh 'docker build -t scientific-calculator .'
+                    }
                 }
             }
              stage('Docker Push') {
                 steps {
-                    sh 'docker tag scientific-calculator hashtagsau/scientific-calculator:latest'
-                    sh 'docker push hashtagsau/scientific-calculator:latest'
+                    dir('calculator'){
+                        sh 'docker tag scientific-calculator hashtagsau/scientific-calculator:latest'
+                        sh 'docker push hashtagsau/scientific-calculator:latest'    
+                    }
+                    
                 }
              }
 
              stage('Deploy with Ansible') {
                  steps {
-                     sh 'ansible-playbook -i inventory.ini deploy.yml'
+                     dir('calculator'){
+                        sh 'ansible-playbook -i inventory.ini playbook.yaml'
+                     }
                  }
              }
         }
