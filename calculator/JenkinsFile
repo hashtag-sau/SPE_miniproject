@@ -3,7 +3,7 @@ pipeline{
         stages{
             stage('Checkout'){
                 steps{
-                    git url: 'vhttps://github.com/hashtag-sau/SPE_miniproject.git', branch: 'main'
+                    git url: 'https://github.com/hashtag-sau/SPE_miniproject.git', branch: 'main'
 
                 }
             }
@@ -27,6 +27,12 @@ pipeline{
                     sh 'docker tag scientific-calculator hashtagsau/scientific-calculator:latest'
                     sh 'docker push hashtagsau/scientific-calculator:latest'
                 }
+             }
+
+             stage('Deploy with Ansible') {
+                 steps {
+                     sh 'ansible-playbook -i inventory.ini deploy.yml'
+                 }
              }
         }
 
