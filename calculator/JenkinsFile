@@ -1,0 +1,33 @@
+pipeline{
+    agent any
+        stages{
+            stage('Checkout'){
+                steps{
+                    git url: 'vhttps://github.com/hashtag-sau/SPE_miniproject.git', branch: 'main'
+
+                }
+            }
+            stage('Build'){
+                steps{
+                    sh 'mvn clean package'
+                }
+            }
+            stage('Test'){
+                steps{
+                    sh 'mvn test'
+                }
+            }
+            stage('Docker Image Build'){
+                steps{
+                    sh 'docker build -t scientific-calculator .'
+                }
+            }
+             stage('Docker Push') {
+                steps {
+                    sh 'docker tag scientific-calculator hashtagsau/scientific-calculator:latest'
+                    sh 'docker push hashtagsau/scientific-calculator:latest'
+                }
+             }
+        }
+
+}
