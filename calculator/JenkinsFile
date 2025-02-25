@@ -4,7 +4,7 @@ pipeline{
             stage('Checkout'){
                 steps{
                     git url: 'https://github.com/hashtag-sau/SPE_miniproject.git', branch: 'main'
-                    sh 'cd /calculator'
+                    sh 'cd calculator'
                 }
             }
             stage('Build'){
