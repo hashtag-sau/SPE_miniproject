@@ -47,4 +47,19 @@ pipeline{
              }
         }
 
+        post {
+        
+        success {
+            echo "Build succeeded!"
+        }
+        
+        failure {
+            echo "Build failed! Sending notification..."
+            emailext (
+                subject: "Build Failure: ${env.JOB_NAME} #${env.BUILD_NUMBER}",
+                body: "Check build details at ${env.BUILD_URL}",
+                to: "saurabh.dubey@iiitb.ac.in"
+            )
+        }
+
 }
